@@ -1,0 +1,47 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "react-app",
+    "react-app/jest",
+    "plugin:prettier/recommended",
+    "plugin:storybook/recommended",
+    "plugin:cypress/recommended"
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": 0,
+    "react/display-name": 0,
+    "react/prop-types": 0,
+    "explicit-function-return-type": 0,
+    "explicit-member-accessibility": 0,
+    "indent": 0,
+    "member-delimiter-style": 0,
+    "no-explicit-any": 0,
+    "no-var-requires": 0,
+    "no-use-before-define": 0,
+    "no-unused-vars": [
+      2,
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "no-console": [
+      2,
+      {
+        "allow": ["warn", "error"]
+      }
+    ]
+  },
+  "overrides": [
+    {
+      // or whatever matches stories specified in .storybook/main.js
+      "files": ["*.stories.@(ts|tsx|js|jsx|mjs|cjs)"],
+      "rules": {
+        // example of overriding a rule
+        "storybook/hierarchy-separator": "error",
+        // example of disabling a rule
+        "storybook/default-exports": "off"
+      }
+    }
+  ]
+}
