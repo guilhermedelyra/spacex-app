@@ -15,7 +15,7 @@ jobs:
           node-version: 17.x
       - run: yarn
       - run: yarn lint
-      - run: yarn test
+      # - run: yarn test
       - run: yarn build
       - uses: amondnet/vercel-action@v20 #deploy
         with:

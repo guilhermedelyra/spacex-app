@@ -15,7 +15,9 @@ import {FaMapMarkerAlt} from 'react-icons/fa';
 
 export default function UpcomingCard({
   item,
-  noOfLines = 0,
+  descriptionNoOfLines = 0,
+  headingNoOfLines = 1,
+  imageMaxHeight = -1,
   baseDirection = ['column', 'row'],
 }) {
   return (
@@ -33,11 +35,17 @@ export default function UpcomingCard({
         padding={6}
       >
         <Flex flex={1.4} rounded="lg">
-          <Image objectFit="cover" boxSize="100%" rounded="lg" src={item.image} />
+          <Image
+            objectFit="cover"
+            maxH={imageMaxHeight}
+            boxSize="100%"
+            rounded="lg"
+            src={item.image}
+          />
         </Flex>
         <Stack flex={1} justifyContent="space-between" pl={4} spacing={8}>
           <HStack alignItems="top" justifyContent="space-between">
-            <Heading noOfLines={1} fontSize={'5xl'} fontFamily={'heading'}>
+            <Heading noOfLines={headingNoOfLines} fontSize={'5xl'} fontFamily={'heading'}>
               {item.title}
             </Heading>
             <Text
@@ -81,12 +89,12 @@ export default function UpcomingCard({
             </Box>
           </Center>
 
-          {noOfLines && (
+          {descriptionNoOfLines && (
             <Text
               textAlign={'left'}
               color={useColorModeValue('gray.700', 'gray.400')}
               px={3}
-              noOfLines={[1, noOfLines]}
+              noOfLines={[1, descriptionNoOfLines]}
             >
               {item.description}
             </Text>

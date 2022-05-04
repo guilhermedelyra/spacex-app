@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import '@fontsource/orbitron';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ChakraProvider,
   Box,
@@ -12,19 +13,37 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import {ColorModeSwitcher} from './ColorModeSwitcher';
+import axios from 'axios';
 import ImageSlider from './components/organisms/ImageSlider';
 import Card from './components/organisms/Card';
-import {SliderData} from './components/__mocked_data__/SliderData';
+// import {SliderData} from './components/__mocked_data__/SliderData';
 import theme from './theme';
-
-const [item1, item2, item3] = SliderData;
+import {baseUrl} from './utils.js';
 
 function App() {
+  const [nextLaunches, setNextLaunches] = useState([]);
+  const [pastLaunches, setPastLaunches] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${baseUrl}/launches/upcoming`).then(res => {
+      setNextLaunches(res.data);
+    });
+
+    axios({
+      method: 'GET',
+      url: `${baseUrl}/launches/past`,
+      timeout: 9000,
+    }).then(res => {
+      // eslint-disable-next-line no-console
+      console.log(res.data);
+      setPastLaunches(res.data);
+    });
+  }, []);
+
   return (
     <ChakraProvider theme={theme}>
       <Box textAlign="center" fontSize="xl" p={5}>
-        {/* <Grid minH="100vh" p={3}> */}
-        <Flex minWidth="max-content" alignItems="top" justifyContent="center">
+        <Flex alignItems="top" justifyContent="center">
           <Spacer />
           <Text
             bgGradient="linear(to-l, #7928CA, #FF0080)"
@@ -40,7 +59,7 @@ function App() {
           <ColorModeSwitcher justifySelf="flex-end" />
         </Flex>
 
-        <ImageSlider slides={SliderData} />
+        <ImageSlider slides={nextLaunches} />
 
         <Divider
           orientation="horizontal"
@@ -54,12 +73,16 @@ function App() {
         </Text>
         <Center mt={'5rem'}>
           <Grid templateColumns="repeat(2, 1fr)" w="83.5%">
-            <Card item={item1} baseDirection="column" />
-            <Card item={item2} baseDirection="column" />
-            <Card item={item3} baseDirection="column" />
+            {pastLaunches.map(launch => (
+              <Card
+                key={launch.id}
+                item={launch}
+                baseDirection="column"
+                imageMaxHeight={'40vh'}
+              />
+            ))}
           </Grid>
         </Center>
-        {/* </Grid> */}
       </Box>
     </ChakraProvider>
   );

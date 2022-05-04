@@ -31,7 +31,14 @@ const ImageSlider = ({slides}) => {
       />
       {slides.map((slide, index) => {
         if (index === current) {
-          return <Card key={`${slide.name}-${index}`} item={slide} noOfLines={4} />;
+          return (
+            <Card
+              key={`${slide.id}-${slide.name}-${index}`}
+              item={slide}
+              headingNoOfLines={2}
+              descriptionNoOfLines={4}
+            />
+          );
         }
         return <></>;
       })}
