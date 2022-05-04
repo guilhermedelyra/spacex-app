@@ -9,9 +9,11 @@ import {
   Stack,
   HStack,
   Text,
+  Link,
   useColorModeValue,
 } from '@chakra-ui/react';
 import {FaMapMarkerAlt} from 'react-icons/fa';
+import {Link as ReactLink} from 'react-router-dom';
 
 export default function UpcomingCard({
   item,
@@ -94,9 +96,11 @@ export default function UpcomingCard({
               textAlign={'left'}
               color={useColorModeValue('gray.700', 'gray.400')}
               px={3}
+              fontSize={item.details ? 'md' : 'sm'}
+              as={item.details ? null : 'i'}
               noOfLines={[1, descriptionNoOfLines]}
             >
-              {item.description}
+              {item.details ? item.details : '- No description was provided. -'}
             </Text>
           )}
           <Stack align={'left'} justify={'left'} direction={'row'} mt={6}>
@@ -109,23 +113,24 @@ export default function UpcomingCard({
               {item.location}
             </Text>
           </Stack>
-
-          <Button
-            w="full"
-            h="8rem"
-            fontSize={'2xl'}
-            rounded={'lg'}
-            bg={'blue.400'}
-            color={'white'}
-            _hover={{
-              bg: 'blue.500',
-            }}
-            _focus={{
-              bg: 'blue.500',
-            }}
-          >
-            Learn More
-          </Button>
+          <Link as={ReactLink} to={'/details'} state={item}>
+            <Button
+              w="full"
+              h="8rem"
+              fontSize={'2xl'}
+              rounded={'lg'}
+              bg={'blue.400'}
+              color={'white'}
+              _hover={{
+                bg: 'blue.500',
+              }}
+              _focus={{
+                bg: 'blue.500',
+              }}
+            >
+              Learn More
+            </Button>
+          </Link>
         </Stack>
       </Stack>
     </Center>
