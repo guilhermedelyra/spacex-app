@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import '@fontsource/orbitron';
 import React, {useEffect, useState} from 'react';
@@ -25,19 +26,33 @@ function App() {
   const [pastLaunches, setPastLaunches] = useState([]);
 
   useEffect(() => {
-    axios.get(`${baseUrl}/launches/upcoming`).then(res => {
-      setNextLaunches(res.data);
-    });
+    axios({
+      method: 'GET',
+      url: `${baseUrl}/launches/upcoming`,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+    })
+      .then(res => {
+        setNextLaunches(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
     axios({
       method: 'GET',
       url: `${baseUrl}/launches/past`,
-      timeout: 9000,
-    }).then(res => {
-      // eslint-disable-next-line no-console
-      console.log(res.data);
-      setPastLaunches(res.data);
-    });
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+    })
+      .then(res => {
+        setPastLaunches(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }, []);
 
   return (

@@ -1,1 +1,1 @@
-export const baseUrl = 'http://spacex-api-indol.vercel.app';
+export const baseUrl = 'https://spacex-api-indol.vercel.app';
